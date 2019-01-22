@@ -79,6 +79,22 @@ systemctl restart nginx
 
 > ### Containers keep the same hardware and kernel.
 
-
 **Containerization is :**
 when we have an app like django , we package only the tools required to run django along with is code in a small box and keep it. 
+
++ An image is a representation of the operating system distro , python , django app code , command to run the program using which we can run our applications.
+
++ A container is an instance of the image and is run by docker.
+
++ Install docker and run `docker run hello-world` to pull the hello-world image from the docker hub.
+
++ A docker image removes the wireless drivers , display drivers , the kernel , ui  etc and so its brought all the way down to a very less size. 
+
++ A single host can run only 255 docker images.(254 actually since the host takes an ip address)
+
++ To pull a docker image : `docker pull debian`
+
++ To run the debian container
+    ```docker
+    docker run -it debian bash
+    ```

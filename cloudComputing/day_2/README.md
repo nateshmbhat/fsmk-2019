@@ -43,9 +43,9 @@
     + https on 443 are some default ports for those services.
 
 + To login to the remote server: 
-```bash
-ssh root@<serveripaddress>
-```
+    ```bash
+    ssh root@<serveripaddress>
+    ```
 
 + When we connect to a remote server for first time , the public key of that server is added to the known_hosts file.
 
@@ -61,7 +61,7 @@ ssh root@<serveripaddress>
 ```python manage.py runserver 0.0.0.0:8000``` will make it accessible to all.
 
 
-#### A small note on protocols :  
+#### A small note on protocols :
 
-+ TCP works only on packets 
++ TCP works on packets 
 + http is context aware with context info like if the content is an image , video , text etc
