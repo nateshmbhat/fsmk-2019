@@ -67,7 +67,7 @@
 
 
  
-## Serving a Django app inside the container : 
+## Serving Django apps inside the container and Load Balancing : 
 1. Get a shell inside the created container using `docker exec -it container bash` .
 2. Create a django project and run the django server on `0.0.0.0:8000` port.
 
@@ -90,6 +90,10 @@
 
     ```docker
     # ~/Dockerfile
+
+    FROM debian:latest
+
+    LABEL maintainer="maintainerName"
 
     RUN apt update -y 
     RUN apt install -y python-pip
@@ -119,3 +123,75 @@
     ```
 
 8. Now inspect the new container's ip address and write the ip addresses in the `/etc/nginx/sites-enabled/default` in the upstream directive (just like in step 3) . Thus we can load balance among various django servers that are running inside different containers.
+
+
+
+#### MISC : 
++ HA_Proxy : High Availibility , A tool used in industry to handle the load balancing in an more advanced way .
+
+
+
+# Security : 
+One of the most used tools in industry for auditing security is `LYNIS` .
+
+> Lynis is a battle-tested security tool for systems running Linux, macOS, or Unix-based operating system. It performs an extensive health scan of your systems to support system hardening and compliance testing. The project is open source software with the GPL license and available since 2007.
+
+
+Download Link :
+
+```
+wget https://downloads.cisofy.com/lynis/lynis-2.7.0.tar 
+```
+
++ We configure ssh to run on a different port other than port 22 by editing in `/etc/ssh/sshd_config` and restart the sshd server.
+
++ We create a new ssh user and and we use only that user account while connecting from ssh next time.
+
+    ```bash
+    adduser sshuser
+    ```
+    ```bash
+    adduser superuser sudo
+    ```
++ disable PermitRootLogin from the `sshd_config` file and add the line `AllowUsers sshuser` at the end of the `sshd_config` file.
+
++ `sshd -t` command will test the config file for any errors. If all is well , then restart the sshd service.
+
++ After restarting our `sshd` server , from now on  , we use the non superuser `sshuser` to login to the ssh server first.
+
+
+    ```bash
+    ssh sshuser@<ipaddress> -p <newport>
+    ```
+
+    + Once we are inside our server as `sshuser` , we can now login from there to the `superuser` to get the admin rights.
+
+        ```bash
+        su - superuser
+        ```
+    
+### FireWall : 
+> Firewall is a service that has the ability to allow or deny access to any ports on the system
++ We install ufw (uncomplicated fireWall) using
+    ```bash
+    apt install ufw     
+    ```
++ TO see ufw status
+    ```bash
+    ufw status
+    ```
+
++ To allow any http requests through this firewall
+    ```bash
+    ufw allow http
+    ufw allow 20000/tcp
+    ```
+    + To restart ufw
+        ```bash
+        ufw disable ; ufw enable ;
+        ```
+
+
+
+#### Closing : 
++ Gnome-boxes is a lightweight alternative to virtualbox
