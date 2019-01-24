@@ -7,7 +7,7 @@
     docker run --help
     ```
 
-+ View all the existing docker containers and thier status (either running or not ) using 
++ View all the existing docker containers and their status (either running or not ) using 
     ```
     docker ps -a
     ```
@@ -47,7 +47,7 @@
     docker inspect <containerNameOrId>
     ```
 
-+ To download a new image from django hub
++ To download a new image from docker hub
     ```docker
     docker pull <imagename>
     ```
@@ -84,6 +84,7 @@
         server 172.17.0.4:8000 ; 
     }
     ```
+
 4. Restart the nginx server and check if the nginx server is able to correclty forward the requests to the djangoApp running in the container.
 
 5. To automate all this creation of django project and running the server in every container , we make make file "Dockerfile " with the following lines in the file `Dockerfile` : 
